@@ -4,8 +4,7 @@
 In this report we show which weather events have a greatest impact to injury and health as well as the greatest economic impact overall for the United States. In order to investigate this hypothesis we have gathered the data from [U.S. National Oceanic and Atmospheric Administration's (NOAA) storm database.](http://www.ncdc.noaa.gov/stormevents/) The events in the database start in the year 1950 and end in November 2011. This database tracks characteristics of major storms and weather events in the United States, including when and where they occur, as well as estimates of any fatalities, injuries, and property damage. Based on the details captured on the [NOAA website](http://www.ncdc.noaa.gov/stormevents/details.jsp) only data from 1996 onwards will be studied. This is to stop bias from being introduced into the data. From this data taking the top 10 events, we found Tornado's are major danger to public health as it results in more fatalities and Injuries. Flood events on the other hand have had major impact on economy of the United States.
 
 
-
-#Loading and Preprocessing the NOAA Storm Data
+#Data Processing
 
 ###Get and load the data
 This section gets and loads the required data. If the data already has already been downloaded, the data is not downloaded again.
@@ -36,10 +35,21 @@ if (!file.exists(fileName)){
   # download into the data directory
   download.file(fileUrl, fileName, method = "auto")
 }
+```
 
+```
+## Warning in download.file(fileUrl, fileName, method = "auto"): downloaded
+## length 29032448 != reported length 49177144
+```
 
+```r
 # load the csv in data frame
 rawStormData <- read.csv(fileName, as.is=TRUE)
+```
+
+```
+## Warning in scan(file, what, nmax, sep, dec, quote, skip, nlines,
+## na.strings, : EOF within quoted string
 ```
 
 ###Check the dataset
@@ -113,7 +123,7 @@ str(rawStormData)
 ```
 
 ```
-## 'data.frame':	902297 obs. of  37 variables:
+## 'data.frame':	660775 obs. of  37 variables:
 ##  $ STATE__   : num  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ BGN_DATE  : chr  "4/18/1950 0:00:00" "4/18/1950 0:00:00" "2/20/1951 0:00:00" "6/8/1951 0:00:00" ...
 ##  $ BGN_TIME  : chr  "0130" "0145" "1600" "0900" ...
@@ -689,8 +699,7 @@ unique(stormData[, "evtype"])
 ## [977] "COLD/WIND CHILL"                "MARINE HIGH WIND"              
 ## [979] "TSUNAMI"                        "DENSE SMOKE"                   
 ## [981] "LAKESHORE FLOOD"                "MARINE THUNDERSTORM WIND"      
-## [983] "MARINE STRONG WIND"             "ASTRONOMICAL LOW TIDE"         
-## [985] "VOLCANIC ASHFALL"
+## [983] "MARINE STRONG WIND"             "ASTRONOMICAL LOW TIDE"
 ```
 
 
@@ -770,19 +779,19 @@ head(sort(tapply(stormData$totalInjuriesFatalities, stormData$evtype, sum), decr
 
 ```
 ##             TORNADO   THUNDERSTORM WIND      EXCESSIVE HEAT 
-##               96997               10173                8428 
-##               FLOOD           LIGHTNING                HEAT 
-##                7281                6048                3037 
-##         FLASH FLOOD           ICE STORM            WILDFIRE 
-##                2837                2064                1696 
-##        WINTER STORM                HAIL HURRICANE (TYPHOON) 
-##                1570                1512                1468 
-##           HIGH WIND          HEAVY SNOW         RIP CURRENT 
-##                1385                1163                1106 
-##            BLIZZARD                 FOG      WINTER WEATHER 
-##                 907                 796                 599 
-##           HEAT WAVE          DUST STORM 
-##                 551                 462
+##               86953                8736                7454 
+##               FLOOD           LIGHTNING         FLASH FLOOD 
+##                6956                5054                2237 
+##                HEAT           ICE STORM        WINTER STORM 
+##                2177                2048                1519 
+## HURRICANE (TYPHOON)            WILDFIRE                HAIL 
+##                1453                1425                1331 
+##           HIGH WIND          HEAVY SNOW            BLIZZARD 
+##                1228                1119                 899 
+##         RIP CURRENT                 FOG           HEAT WAVE 
+##                 809                 796                 551 
+##          DUST STORM      TROPICAL STORM 
+##                 455                 428
 ```
 
 ###Get the economical data in the correct formats
@@ -833,7 +842,7 @@ summary(stormData$totalPropertyDamage)
 
 ```
 ##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-## 0.000e+00 0.000e+00 0.000e+00 4.746e+05 5.000e+02 1.150e+11
+## 0.000e+00 0.000e+00 0.000e+00 5.665e+05 1.000e+01 1.150e+11
 ```
 
 ```r
@@ -853,7 +862,7 @@ summary(stormData$totalCropDamage)
 
 ```
 ##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-## 0.000e+00 0.000e+00 0.000e+00 5.442e+04 0.000e+00 5.000e+09
+## 0.000e+00 0.000e+00 0.000e+00 6.505e+04 0.000e+00 5.000e+09
 ```
 
 ```r

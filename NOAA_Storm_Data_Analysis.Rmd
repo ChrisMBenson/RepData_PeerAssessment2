@@ -9,8 +9,7 @@ output:
 In this report we show which weather events have a greatest impact to injury and health as well as the greatest economic impact overall for the United States. In order to investigate this hypothesis we have gathered the data from [U.S. National Oceanic and Atmospheric Administration's (NOAA) storm database.](http://www.ncdc.noaa.gov/stormevents/) The events in the database start in the year 1950 and end in November 2011. This database tracks characteristics of major storms and weather events in the United States, including when and where they occur, as well as estimates of any fatalities, injuries, and property damage. Based on the details captured on the [NOAA website](http://www.ncdc.noaa.gov/stormevents/details.jsp) only data from 1996 onwards will be studied. This is to stop bias from being introduced into the data. From this data taking the top 10 events, we found Tornado's are major danger to public health as it results in more fatalities and Injuries. Flood events on the other hand have had major impact on economy of the United States.
 
 
-
-#Loading and Preprocessing the NOAA Storm Data
+#Data Processing
 
 ###Get and load the data
 This section gets and loads the required data. If the data already has already been downloaded, the data is not downloaded again.
